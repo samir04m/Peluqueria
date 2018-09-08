@@ -24,4 +24,4 @@ class Subtipo(models.Model):
 class Factura(models.Model):
     fecha = models.DateTimeField(default=timezone.now)
     empleado = models.ForeignKey(Empleado, null=False, blank=False, on_delete=models.CASCADE)
-    servicios = models.ManyToManyField(Servicio)
+    subtipos = models.ManyToManyField(Subtipo)
