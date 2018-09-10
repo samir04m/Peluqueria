@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block extrahead %}
+    <style>
+        body {
+            background-color: #00796b;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="container">
+        <div class="card-panel">
+            <center><h4 class="m-t-0">{{title}}</h4></center>
+            <hr>
+            
+        </div>
+    </div>
+
+{% endblock %}

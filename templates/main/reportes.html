@@ -1,0 +1,60 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Reportes{% endblock %}
+
+{% block extrahead %}
+    <style>
+        body {
+            background-color: #00796b;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="container">
+        <div class="card-panel z-depth-4">
+            <center><h4 style="margin-top:0px;">Reportes</h4></center> <hr>
+            <div class="row">
+                <div class="col s12 m6" style="font-size:26px;">
+                    Ingresos:
+                    <div class="p-l-20">
+                        <ul class="m-0">
+                            <li>Dueño: <div class="right">$ <span class="v">{{ingreso.dueno}}</span></div></li>
+                            <li>Empleados: <div class="right">$ <span class="v">{{ingreso.empleados}}</span></div></li>
+                            <li>Insumos: <div class="right">$ <span class="v">{{ingreso.insumos}}</span></div></li>
+                            <li>Total: <div class="right">$ <span id="total"> - </span></div></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col s12 offset-m1 m5">
+                    <center><big>Listada de Reportes</big></center>
+                    <ul style="font-size:20px;">
+                        <li><a href="{% url 'contabilidad:reportes_diarios' %}">Ver Reportes Diarios</a></li>
+                        <li><a href="">Ver Reportes Semanales</a></li>
+                        <li><a href="">Ver Reportes Mensuales</a></li>
+                        <li><a href="">Ver Reportes Por Servicio</a></li>
+                        <li><a href="">Ver Reportes Por Empleados</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var total = 0;
+            $('li > div > span.v').each(function(index){
+                var precio = parseInt($(this).text());
+                total = total + precio;
+            });
+
+            $('span#total').text(total);
+
+        });
+
+    </script>
+{% endblock %}
