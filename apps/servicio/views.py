@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 
 from apps.servicio.models import Empleado, Servicio, Tipo, Subtipo, Factura
+from apps.contabilidad.models import Ingreso
 from apps.servicio.forms import FacturaForm
 
 # Create your views here.
@@ -23,13 +24,8 @@ def facturar(request):
         empleado = Empleado.objects.filter(id=int(request.POST["empleado"])).first()
         factura = Factura(empleado=empleado)
         factura.save()
-        # form = FacturaForm(request.POST)
-        # if form.is_valid():
-        #     form.save()
-        # else:
 
-        # print("is valid-------->", form.is_valid())
-
+        ingresos = 0
         servicios = Servicio.objects.all()
         for s in servicios :
             for tipo in s.tipo_set.all():
@@ -37,9 +33,11 @@ def facturar(request):
                     # print("Si esta ->", tipo.nombre)
                     subtipo = Subtipo.objects.filter(id=int(request.POST[tipo.nombre])).first()
                     factura.subtipos.add(subtipo)
+                    ingresos = ingresos + subtipo.precio
                 # else:
                     # print("NO esta ->", tipo.nombre)
 
+        updateIngreso(ingresos)
         context = {"factura": factura}
         # return render(request, "main/factura.html", context)
         return redirect('servicio:factura', factura.id)
@@ -56,3 +54,20 @@ def factura(request, id):
     print("----------->",servicios)
     context = {"factura": factura}
     return render(request, "main/factura.html", context)
+
+def updateIngreso(valor_ingresos):
+    dueno = float(valor_ingresos)*0.4
+    empleados = float(valor_ingresos)*0.5
+    insumos = float(valor_ingresos)*0.1
+
+    ingreso = Ingreso.objects.first()
+    if ingreso:
+        print("====> actualizacion de registro ingreso")
+        ingreso.dueno = float(ingreso.dueno) + dueno
+        ingreso.empleados = float(ingreso.empleados) + empleados
+        ingreso.insumos = float(ingreso.insumos) + insumos
+    else:
+        ingreso = Ingreso(dueno=dueno, empleados=empleados, insumos=insumos)
+        print("====> creacion de registro ingreso")
+
+    ingreso.save()
