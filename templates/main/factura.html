@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Factura{% endblock %}
+
+{% block extrahead %}
+    <style>
+        body {
+            background-color: #00796b;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col s12 offset-m2 m8">
+                <div class="card-panel" style="font-size:18px;">
+                    <h4>Factura de Pago #{{ factura.id }}</h4>
+                    <hr>
+                    <div class="row">
+                        <div class="col s12">
+                            <b>Fecha:</b>
+                            <div class="right">{{ factura.fecha }}</div>
+                        </div><br><br>
+                        <div class="col s12">
+                            <b>Empleado:</b>
+                            <div class="right">{{ factura.empleado.fname }}</div>
+                        </div><br><br>
+                        <div class="col s12">
+                            <b>Servicios:</b>
+                            <div class="p-l-10">
+                                <ol>
+                                    {% for s in factura.subtipos.all %}
+                                        <li>{{s.tipo.nombre}} - {{s.nombre}} <div class="right">$ <span>{{s.precio}}</span></div></li>
+                                    {% endfor %}
+                                </ol>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

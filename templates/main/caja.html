@@ -1,0 +1,84 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Caja Registradora{% endblock %}
+
+{% block extrahead %}
+    <style>
+        body {
+            background-color: #00796b;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12 offset-m1 m10">
+                <div class="card-panel hoverable z-depth-2">
+                    <h3>Caja Registradora</h3>
+                    <form action="{% url 'servicio:facturar' %}" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <select name="empleado">
+                                    {% if empleados %}
+                                        <option value="" disabled selected>Seleccione un empleado</option>
+                                        {% for empleado in empleados %}
+                                            <option value="{{ empleado.id }}">{{ empleado.nombre }} {{ empleado.apellidos }}</option>
+                                        {% endfor %}
+                                        {% else %}
+                                            <h4>No hay empleados :(</h4>
+                                    {% endif %}
+                                </select>
+                                <label>Empleado</label>
+                            </div>
+
+                            <div class="col s12 m6">
+                                {% if servicios %}
+                                    <ul class="collapsible" data-collapsible="accordion">
+                                        {% for servicio in servicios %}
+                                        <li>
+                                            <div class="collapsible-header active">{{ servicio.nombre }}</div>
+                                            <div class="collapsible-body p-0">
+
+                                                    <ul class="collapsible m-0" data-collapsible="accordion">
+                                                        {% for tipo in servicio.tipo_set.all %}
+                                                            <li>
+                                                                <div class="collapsible-header grey lighten-4">{{ tipo.nombre }}</div>
+                                                                <div class="collapsible-body p-tb-10 grey lighten-5">
+                                                                    {% for subtipo in tipo.subtipo_set.all %}
+                                                                    <p>
+                                                                        <input class="with-gap" name="{{ tipo.nombre }}" type="radio" value="{{ subtipo.id }}" id="{{ subtipo.id }}"/>
+                                                                        <label for="{{ subtipo.id }}">{{ subtipo.nombre }} - {{ subtipo.precio }}</label>
+                                                                   </p>
+                                                                   {% endfor %}
+                                                                </div>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <h4>No hay servicios :(</h4>
+                                {% endif %}
+
+                            </div>
+                            <div class="col s12">
+                                <big>Total a Pagar: $ 120.000 COP</big>
+                                <center><button type="submit" class="btn waves-effect waves-light btn-rounded">Generar Factura</button></center>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

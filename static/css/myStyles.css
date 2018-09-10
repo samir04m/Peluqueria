@@ -12,3 +12,14 @@ main {
 	border-radius: 50px;
 	padding: 0 15px 0 15px;
 }
+
+.card-panel {
+	border-radius: 10px !important;
+}
+
+p label {color: black !important:; }
+
+.m-0 { margin: 0 !important; }
+
+.p-0 { padding: 0 !important; }
+.p-tb-10 { padding-top: 10px; padding-bottom: 10px;}
