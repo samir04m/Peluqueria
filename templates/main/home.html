@@ -3,8 +3,52 @@
 
 {% block title %}Inicio{% endblock %}
 
+{% block extrahead %}
+
+    <style>
+        @font-face {
+            font-family: Pacifico;
+            src: url("{% static 'fonts/Pacifico-Regular.ttf' %}");
+        }
+
+        nav, .pacifico, .caption {
+            font-family: 'Pacifico', cursive;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-    <div class="container">
-        <h1>Estas en home</h1>
+
+    <div class="slider">
+        <ul class="slides">
+            <li>
+                <img src="{% static 'images/02d.jpg' %}">
+                <div class="caption center-align">
+                    <h1>Bienvenido!</h1>
+                    <h4 class="light grey-text text-lighten-3">Peluqueria</h4>
+                </div>
+            </li>
+            <li>
+                <img src="{% static 'images/01d.jpg' %}">
+                <div class="caption left-align">
+                    <h3>Left Aligned Caption</h3>
+                    <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                </div>
+            </li>
+        </ul>
     </div>
+
+    <div class="container">
+        <h2>Hello, world</h2>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("div.nav-wrapper").addClass("grey lighten-4");
+            $(".brand-logo").addClass("teal-text");
+            $("#ainicio").addClass("teal-text");
+        });
+    </script>
 {% endblock %}
