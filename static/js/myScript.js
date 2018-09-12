@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('.slider').slider({
         height: 500
     });
-    
+
     $('.carousel.carousel-slider').carousel({
         fullWidth: true,
         indicators: true

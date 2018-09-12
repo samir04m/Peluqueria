@@ -24,7 +24,7 @@
             <li>
                 <img src="{% static 'images/02d.jpg' %}">
                 <div class="caption center-align">
-                    <h1>Bienvenido!</h1>
+                    <h1>Welcome - Bienvenido!</h1>
                     <h4 class="light grey-text text-lighten-3">Peluqueria</h4>
                 </div>
             </li>
@@ -37,10 +37,105 @@
             </li>
         </ul>
     </div>
+    <br>
+    <div class="section">
+        <div class="container">
+            <div class="row border">
+                <center><h3 class="pacifico">Nuestros Servicios</h3></center>
 
-    <div class="container">
-        <h2>Hello, world</h2>
+                <div class="col s12 offset-m1 m4">
+                    <div class="card-panel z-depth-2 hoverable grey lighten-3">
+                        <center><big class="pacifico">Cabello</big></center>
+                        <ol class="p-l-20">
+                            <li><b>Corte:</b>
+                                <ul class="m-l-20 wlst">
+                                    <li>Tipo 1 <div class="right">$ 10.000</div></li>
+                                    <li>Tipo 2 <div class="right">$ 12.000</div></li>
+                                    <li>Tipo 3 <div class="right">$ 14.000</div></li>
+                                </ul>
+                            </li>
+                            <li><b>Tinturado:</b>
+                                <ul class="m-l-20 wlst">
+                                    <li>Nivel A <div class="right">$ 12.000</div></li>
+                                    <li>Nivel B <div class="right">$ 14.000</div></li>
+                                </ul>
+                            </li>
+                            <li><b>Peinado:</b>
+                                <ul class="m-l-20 wlst">
+                                    <li>Sencillo <div class="right">$ 15.000</div></li>
+                                    <li>Extenso <div class="right">$ 16.000</div></li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="col s12 offset-m1 m4">
+                    <div class="card-panel z-depth-2 hoverable grey lighten-3">
+
+                        <center><h5 class="pacifico">Manicure</h5></center>
+                        <ul class="m-l-20 wlst">
+                            <li>Corte <div class="right">$ 12.000</div></li>
+                            <li>Pintura <div class="right">$ 14.000</div></li>
+                        </ul>
+                        <br><br>
+                        <center><h5 class="pacifico">Pedicure</h5></center>
+                        <ul class="m-l-20 wlst">
+                            <li>Corte <div class="right">$ 12.000</div></li>
+                            <li>Pintura <div class="right">$ 14.000</div></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+
     </div>
+
+    <div class="parallax-container">
+      <div class="parallax"><img src="{% static 'images/02d.jpg' %}"></div>
+      <div class="center white-text">
+            <br><br><br>
+            <div class="container">
+                <h3 class="pacifico">Somos una peluquería fundada hace 8 años . Ofrecemos a nuestros clientes servicios de salud, belleza y bienestar, a través de servicios de estética y peluquería con altos estándares de calidad , apoyados en un equipo competente y efectivo</h3>
+
+            </div>
+      </div>
+    </div>
+
+    <div class="section p-b-0">
+        <center><h3 class="pacifico">Ubicanos</h3></center>
+        <div class="row m-b-0">
+            <div class="col s12 m8 p-0 m-0">
+                <section class="mapa"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3913.4746256336643!2d-74.18925898576883!3d11.226454092017084!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef4f5a5b24fb07f%3A0xb2cb35bcc3e481ad!2sUniversidad+Del+Magdalena!5e0!3m2!1ses-419!2sco!4v1484530465809" height="550" frameborder="0" style="border:0" allowfullscreen></iframe></section>
+            </div>
+            <div class="col s12 m4 grey lighten-3 p-0 m-0" style="min-height:550px;">
+                <div class="container">
+                    <br><br>
+                    <center><h5 class="pacifico">Contactanos</h5></center>
+                    <ul class="nlst contacto" style="font-size:20px; font-weight:500;">
+                        <li>Dueño: <div class="right">Milena Dias</div></li>
+                        <li>Telefono: <div class="right">+57 (5) 430 9159</div></li>
+                        <li>Whatsapp: <div class="right">+57 301 3430959</div></li>
+                        <li>Correo: <div class="right">peluqueria@gmail.com</div></li>
+                        <li>Dirrecion: <div class="right">Calle 29 No 15-100 CC Ocean Mall L1-68 Santa Marta, Magdalena, Colombia</div></li>
+                    </ul>
+
+                    <center>
+                        <br><br><br><br><br>
+                        <button class="btn waves-effect waves-light btn-rounded pulse"><i class="fas fa-phone"></i> &nbsp; Llamar </button>
+                    </center>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
 {% endblock %}
 
 {% block extrajs %}
@@ -49,6 +144,38 @@
             $("div.nav-wrapper").addClass("grey lighten-4");
             $(".brand-logo").addClass("teal-text");
             $("#ainicio").addClass("teal-text");
+
+            $("footer").removeClass("teal");
+            $("footer").removeClass("darken-1");
+            $("footer").addClass("grey");
+            $("footer").addClass("lighten-2");
+            $("footer").addClass("grey-text text-darken-2");
+            $("footer-copyrigh").removeClass("white-text");
+            $("footer-copyrigh > .container > a").addClass("grey-text text-darken-2");
+            $(".oscurecer").addClass("grey-text text-darken-2");
+
+             $('.parallax').parallax();
+
+             (function() {
+                             // We must use JS as we need to select previous
+                 // elements which can't be done with CSS.
+                 $('.skew-title').children('span').hover((function() {
+                 var $el, n;
+                 $el = $(this);
+                 n = $el.index() + 1;
+                 $el.addClass('flat');
+                 if (n % 2 === 0) {
+                 return $el.prev().addClass('flat');
+                 } else {
+                 if (!$el.hasClass('last')) {
+                 return $el.next().addClass('flat');
+                 }
+                 }
+                 }), function() {
+                 return $('.flat').removeClass('flat');
+                 });
+                 }).call(this);
+
         });
     </script>
 {% endblock %}
