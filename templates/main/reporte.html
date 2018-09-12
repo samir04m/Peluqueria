@@ -4,6 +4,9 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block extrahead %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="{% static "" %}{{archivo}}"></script>
+
     <style>
         body {
             background-color: #00796b;
@@ -14,10 +17,10 @@
 {% block content %}
     <br>
     <div class="container">
-        <div class="card-panel">
+        <div class="card-panel" style="overflow:hidden;">
             <center><h4 class="m-t-0">{{title}}</h4></center>
             <hr>
-            
+            <div id="chart_div"></div>
         </div>
     </div>
 
