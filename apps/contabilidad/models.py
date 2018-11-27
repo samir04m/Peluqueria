@@ -10,6 +10,7 @@ class Ingreso(models.Model):
 class Egreso(models.Model):
     month =  models.IntegerField()
     year =  models.IntegerField()
+    insumos = models.IntegerField()
     instrumentacion =  models.IntegerField()
     alquiler =  models.IntegerField()
     totalServiciosPublicos =  models.IntegerField()
