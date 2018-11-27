@@ -27,7 +27,7 @@ class Tipo(models.Model):
 
 class Subtipo(models.Model):
     nombre = models.CharField(max_length=50)
-    precio = models.DecimalField(max_digits=7, decimal_places=2)
+    precio = models.IntegerField()
     tipo = models.ForeignKey(Tipo, null=False, blank=False, on_delete=models.CASCADE)
 
     def __str__(self):
