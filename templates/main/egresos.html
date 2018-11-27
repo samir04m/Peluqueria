@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Egresos{% endblock %}
+
+{% block extrahead %}
+    <style>
+        body {
+            background-color: #00796b;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <br>
+        <div class="card-panel">
+            <center><h4 style="margin-top:0px;">Lista de Egresos</h4></center>
+            <div class="row">
+                <div class="col s12 offset-m1 m10">
+
+                    <table class="striped bordered highlight responsive-table">
+                        <thead>
+                            <tr>
+                                <th>Gasto</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Insumos de Materia Prima</td>
+                                <td>$ {{ingreso.insumos}}</td>
+                            </tr>
+                            <tr>
+                                <td>Compra y reparación de Instrumentación</td>
+                                <td>$ 60000.00</td>
+                            </tr>
+                            <tr>
+                                <td>Alquiler del local comercial</td>
+                                <td>$ 300000.00</td>
+                            </tr>
+                            <tr>
+                                <td>Pago de Servicios públicos</td>
+                                <td>
+                                    Energia: $ 80000 <br>
+                                    Agua: $ 20000 <br>
+                                    Telefonía: $ 40000
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

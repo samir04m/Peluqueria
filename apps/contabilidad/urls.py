@@ -1,9 +1,10 @@
 from django.conf.urls import url
 
-from apps.contabilidad.views import reportes, reportes_diarios, reportes_mensuales, reportes_semanales, reportes_por_servicios, reportes_por_empleados
+from apps.contabilidad.views import *
 
 urlpatterns = [
     url(r'^$', reportes, name="reportes"),
+    url(r'^egresos', egresos, name="egresos"),
     # url(r'^reportes', reportes, name="reportes"),
     url(r'^reportes-diarios', reportes_diarios, name="reportes_diarios"),
     url(r'^reportes-semanales', reportes_semanales, name="reportes_semanales"),

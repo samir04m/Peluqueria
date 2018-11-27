@@ -27,9 +27,13 @@
                             <li>Total: <div class="right">$ <span id="total"> - </span></div></li>
                         </ul>
                     </div>
+
+                    <center>
+                        <a href="{% url 'contabilidad:egresos' %}" class="btn waves-effect waves-light">Consultar Egresos</a>
+                    </center>
                 </div>
                 <div class="col s12 offset-m1 m5">
-                    <center><big>Listada de Reportes</big></center>
+                    <center><big>Listado de Reportes</big></center>
                     <ul style="font-size:20px;">
                         <li><a href="{% url 'contabilidad:reportes_diarios' %}">Ver Reportes Diarios</a></li>
                         <li><a href="{% url 'contabilidad:reportes_semanales' %}">Ver Reportes Semanales</a></li>
@@ -38,6 +42,10 @@
                         <li><a href="{% url 'contabilidad:reportes_por_empleados' %}">Ver Reportes Por Empleados</a></li>
                     </ul>
                 </div>
+            </div>
+            <hr>
+            <div class="row">
+                <center><h4>Balance Mensual</h4></center>
             </div>
         </div>
     </div>

@@ -10,6 +10,11 @@ def reportes(request):
     context = {"ingreso": ingreso}
     return render(request, 'main/reportes.html', context)
 
+def egresos(request):
+    ingreso = Ingreso.objects.first()
+    context = {"ingreso": ingreso}
+    return render(request, 'main/egresos.html', context)
+
 def reportes_diarios(request):
     # facturas = Factura.objects.all().select_related('empleado')
     # print("========>facturas = ", facturas)
