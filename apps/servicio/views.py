@@ -13,6 +13,9 @@ def home(request):
 def login(request):
     return render(request, 'main/home.html')
 
+def mapa(request):
+    return render(request, 'main/mapa.html')
+
 def caja(request):
     empleados = Empleado.objects.all()
     servicios = Servicio.objects.all()
