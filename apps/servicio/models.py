@@ -34,6 +34,10 @@ class Subtipo(models.Model):
         return "{} - {} - {} - {}".format(self.id, self.nombre, self.tipo.nombre, self.tipo.servicio.nombre)
 
 class Factura(models.Model):
-    fecha = models.DateTimeField(default=timezone.now)
     empleado = models.ForeignKey(Empleado, null=False, blank=False, on_delete=models.CASCADE)
     subtipos = models.ManyToManyField(Subtipo)
+    total =  models.IntegerField()
+    day =  models.IntegerField()
+    month =  models.IntegerField()
+    year =  models.IntegerField()
+    fecha = models.DateTimeField(default=timezone.now)
