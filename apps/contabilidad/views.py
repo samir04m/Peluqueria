@@ -2,13 +2,18 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 
 from apps.servicio.models import Empleado, Servicio, Tipo, Subtipo, Factura
-from apps.contabilidad.models import Ingreso
+from apps.contabilidad.models import Ingreso, Egreso
 
 # Create your views here.
 def reportes(request):
     ingreso = Ingreso.objects.first()
     context = {"ingreso": ingreso}
     return render(request, 'main/reportes.html', context)
+
+def ingresos(request):
+    ingreso = Ingreso.objects.first()
+    context = {"ingreso": ingreso}
+    return render(request, 'main/egresos.html', context)
 
 def egresos(request):
     ingreso = Ingreso.objects.first()

@@ -4,6 +4,7 @@ from apps.contabilidad.views import *
 
 urlpatterns = [
     url(r'^$', reportes, name="reportes"),
+    url(r'^ingresos', ingresos, name="ingresos"),
     url(r'^egresos', egresos, name="egresos"),
     # url(r'^reportes', reportes, name="reportes"),
     url(r'^reportes-diarios', reportes_diarios, name="reportes_diarios"),

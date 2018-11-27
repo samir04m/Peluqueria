@@ -18,18 +18,21 @@
             <center><h4 style="margin-top:0px;">Reportes</h4></center> <hr>
             <div class="row">
                 <div class="col s12 m6" style="font-size:26px;">
-                    Ingresos:
+                    Total de Ingresos:
                     <div class="p-l-20">
                         <ul class="m-0">
                             <li>Dueño: <div class="right">$ <span class="v">{{ingreso.dueno}}</span></div></li>
                             <li>Empleados: <div class="right">$ <span class="v">{{ingreso.empleados}}</span></div></li>
                             <li>Insumos: <div class="right">$ <span class="v">{{ingreso.insumos}}</span></div></li>
-                            <li>Total: <div class="right">$ <span id="total"> - </span></div></li>
+                            <li>Total: <div class="right">$ <span id="total"> {{ingreso.total}}</span></div></li>
                         </ul>
                     </div>
 
                     <center>
-                        <a href="{% url 'contabilidad:egresos' %}" class="btn waves-effect waves-light">Consultar Egresos</a>
+                        <small>
+                            <a href="{% url 'contabilidad:ingresos' %}">Consultar Ingresos</a> <br>
+                            <a href="{% url 'contabilidad:egresos' %}">Consultar Egresos</a>
+                        </small>
                     </center>
                 </div>
                 <div class="col s12 offset-m1 m5">
@@ -54,15 +57,6 @@
 {% block extrajs %}
     <script type="text/javascript">
         $(document).ready(function() {
-            var total = 0;
-            $('li > div > span.v').each(function(index){
-                var precio = parseInt($(this).text());
-                total = total + precio;
-            });
-
-            $('span#total').text(total);
-
         });
-
     </script>
 {% endblock %}
