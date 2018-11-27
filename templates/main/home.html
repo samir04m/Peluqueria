@@ -14,6 +14,9 @@
         nav, .pacifico, .caption {
             font-family: 'Pacifico', cursive;
         }
+        #section1 {
+            background-image: url("{% static 'images/hypnotize.png' %}");
+        }
     </style>
 {% endblock %}
 
@@ -38,9 +41,9 @@
         </ul>
     </div>
     <br>
-    <div class="section">
+    <div class="section" id="section1">
         <div class="container">
-            <div class="row border">
+            <div class="row border grey lighten-4">
                 <center><h3 class="pacifico">Nuestros Servicios</h3></center>
 
                 <div class="col s12 offset-m1 m4">
@@ -87,13 +90,8 @@
 
                     </div>
                 </div>
-
-
-
             </div>
-
         </div>
-
     </div>
 
     <div class="parallax-container">

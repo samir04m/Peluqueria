@@ -22,7 +22,7 @@ p label {color: black !important; }
 .border {
 	border: 2px dashed lightgrey;
 	border-radius: 5px;
-	background-color: rgba(0,0,0,.03);
+	/* background-color: rgba(0,0,0,.03); */
 }
 
 .mapa{
