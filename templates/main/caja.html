@@ -20,19 +20,36 @@
                     <form action="{% url 'servicio:facturar' %}" method="post">
                         {% csrf_token %}
                         <div class="row">
-                            <div class="input-field col s12 m6">
-                                <select name="empleado">
+                            <div class="col s12 m6">
+                                <h5 class="m-l-10">Seleccione un empleado:</h5>
+                                <div class="m-l-20">
                                     {% if empleados %}
-                                        <option value="" disabled selected>Seleccione un empleado</option>
                                         {% for empleado in empleados %}
-                                            <option value="{{ empleado.id }}">{{ empleado.nombre }} {{ empleado.apellidos }}</option>
+                                          <p>
+                                            <input name="empleado" type="radio" value="{{ empleado.id }}" id="{{ empleado.id }}" />
+                                            <label for="{{ empleado.id }}">{{ empleado.nombre }} {{ empleado.apellidos }}</label>
+                                          </p>
                                         {% endfor %}
-                                        {% else %}
-                                            <h4>No hay empleados :(</h4>
+                                    {% else %}
+                                        <h4>No hay empleados :(</h4>
                                     {% endif %}
-                                </select>
-                                <label>Empleado</label>
+                                </div>
                             </div>
+
+                            <!-- <div class="input-field col s12 m6">
+                              <select name="empleado">
+                                  {% if empleados %}
+                                      <option value="" disabled selected>Seleccione un empleado</option>
+                                      {% for empleado in empleados %}
+                                          <option value="{{ empleado.id }}">{{ empleado.nombre }} {{ empleado.apellidos }}</option>
+                                      {% endfor %}
+                                      {% else %}
+                                          <h4>No hay empleados :(</h4>
+                                  {% endif %}
+                              </select>
+                              <label>Empleado</label>
+                          </div> -->
+
 
                             <div class="col s12 m6">
                                 {% if servicios %}
@@ -49,8 +66,8 @@
                                                                 <div class="collapsible-body p-tb-10 grey lighten-5">
                                                                     {% for subtipo in tipo.subtipo_set.all %}
                                                                     <p>
-                                                                        <input class="with-gap" name="{{ tipo.nombre }}" type="radio" value="{{ subtipo.id }}" id="{{ subtipo.id }}"/>
-                                                                        <label for="{{ subtipo.id }}">{{ subtipo.nombre }} - {{ subtipo.precio }}</label>
+                                                                        <input name="{{ tipo.nombre }}" type="radio" value="{{ subtipo.id }}" id="subtipo-{{ subtipo.id }}"/>
+                                                                        <label for="subtipo-{{ subtipo.id }}">{{ subtipo.nombre }} - {{ subtipo.precio }}</label>
                                                                    </p>
                                                                    {% endfor %}
                                                                 </div>
