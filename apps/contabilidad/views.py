@@ -115,8 +115,19 @@ def reportes_mensuales(request):
     return render(request, 'reportes/mensual.html', context)
 
 def reportes_por_servicios(request):
-    context = {'title': 'Reportes por Servicios', 'archivo':'js/servicio.js'}
-    return render(request, 'main/reporte.html', context)
+    subtipos = Subtipo.objects.all()
+
+    datos = []
+    if subtipos:
+        for s in subtipos:
+            facturas = Factura.objects.filter(subtipos__id=s.id)
+            suma = s.precio*len(facturas)
+            print("EL servicio ",s," fue prestado ",len(facturas)," veces")
+            datos.append([s.name(), len(facturas), suma])
+
+    print(datos)
+    context = {"datos": datos}
+    return render(request, 'reportes/porServicio.html', context)
 
 def reportes_por_empleados(request):
     context = {'title': 'Reportes por Empleados', 'archivo':'js/empleado.js'}

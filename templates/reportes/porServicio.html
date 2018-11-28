@@ -1,0 +1,118 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block title %} Reporte diario {% endblock %}
+
+{% load indice %}
+{% load matriz %}
+{% load nombre_mes %}
+
+{% block content %}
+    <div class="container">
+        <div class="row m-b-0">
+            <br>
+            <a href="{% url 'contabilidad:reportes' %}" class="white-text">
+                <big><i class="fas fa-arrow-left"></i> Volver al Panel de contabilidad</big>
+            </a>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="card-panel">
+                    <center><h4>Ingresos Por Servicios</h4></center>
+                    {% if datos %}
+                        <table class="striped bordered highlight responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Servicio</th>
+                                    <th>Ingresos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in datos %}
+                                    <tr>
+                                        <td>{{ i|matriz:0 }}</td>
+                                        <td>$ {{ i|matriz:2 }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <br><br>
+                            <hr>
+                            <center><h4>Ingresos Por Servicios</h4></center>
+                              <div id="chart_div"></div>
+                            <br><hr><br>
+                              <center><h4>Número de Ventas por Servicio</h4></center>
+                              <div id="piechart_3d"></div>
+                        </div>
+                    {% else %}
+                        <br>
+                        <center>
+                            <h2>:(</h2>
+                            <h3>No hay datos</h3>
+                        </center>
+                    {% endif %}
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extrahead %}
+    <style>
+        body {
+            background-color: #00796b;
+        }
+    </style>
+
+    <script type="text/javascript" src="{% static 'js/loader.js' %}"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(drawColColors);
+
+        function drawColColors() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Ingresos');
+            data.addColumn('number', 'Ingresos');
+
+              data.addRows([
+                  {% for dato in datos %}
+                      [ '{{ dato|matriz:0 }}', {{ dato|matriz:2 }}],
+                  {% endfor %}
+              ]);
+
+              var options = {
+                // colors: ['#3949ab'],
+                fontSize: 10,
+                hAxis: { title: 'Servicios'},
+                vAxis: { title: 'Ingresos' }
+              };
+
+              var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+              chart.draw(data, options);
+        }
+
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data2 = google.visualization.arrayToDataTable([
+                ['Servicio', 'Ingresos'],
+                {% for dato in datos %}
+                    [ '{{ dato|matriz:0 }}', {{ dato|matriz:1 }}],
+                {% endfor %}
+            ]);
+
+            var options2 = {
+              is3D: true,
+              width: 900,
+              height: 500
+            };
+
+            var chart2 = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+            chart2.draw(data2, options2);
+          }
+    </script>
+{% endblock %}

@@ -33,6 +33,9 @@ class Subtipo(models.Model):
     def __str__(self):
         return "{} - {} - {} - {}".format(self.id, self.nombre, self.tipo.nombre, self.tipo.servicio.nombre)
 
+    def name(self):
+        return "{} {}".format(self.tipo.nombre, self.nombre)
+
 class Factura(models.Model):
     empleado = models.ForeignKey(Empleado, null=False, blank=False, on_delete=models.CASCADE)
     subtipos = models.ManyToManyField(Subtipo)
