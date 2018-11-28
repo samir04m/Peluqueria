@@ -41,3 +41,7 @@ class Factura(models.Model):
     month =  models.IntegerField()
     year =  models.IntegerField()
     fecha = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return "Factura #{} - {}. $ {} - Fecha {}/{}/{}".format(self.id, self.empleado.fname(),
+                        self.total, self.day, self.month, self.year)

@@ -27,10 +27,11 @@ def egresos(request):
     egresosDelMes = Egreso.objects.filter(month=int(time.month), year=int(time.year)).first()
 
     ultimosEgresos = Egreso.objects.filter(year=int(time.year)).order_by('-month')[:5][::-1]
-    nfilas = len(ultimosEgresos)
-    datosGrafica = [None] * nfilas
-    for i in range(nfilas):
-        datosGrafica[i] = [meses[ (ultimosEgresos[i].month)-1 ],  getTotalEgresos(ultimosEgresos[i])]
+    if ultimosEgresos:
+        nfilas = len(ultimosEgresos)
+        datosGrafica = [None] * nfilas
+        for i in range(nfilas):
+            datosGrafica[i] = [meses[ (ultimosEgresos[i].month)-1 ],  getTotalEgresos(ultimosEgresos[i])]
 
     context = {"egresos": egresos,
                 "egresosDelMes": egresosDelMes,
@@ -44,10 +45,24 @@ def egreso(request, id):
     context = {"egreso": egreso, "meses":meses, "totalEgreso": getTotalEgresos(egreso)}
     return render(request, "main/egreso.html", context)
 
-def reportes_diarios(request):
+from django.db.models import Sum
 
-    context = {'title': 'Reportes Diarios', 'archivo':'js/diario.js'}
-    return render(request, 'main/reporte.html', context)
+def reportes_diarios(request):
+    time = datetime.datetime.now()
+    ingresos = Factura.objects.filter(month=time.month).order_by('-id')[:10][::1]
+
+    datos = []
+    if ingresos:
+        agregados = []
+        for i in range(len(ingresos)):
+            if not ingresos[i].day in agregados:
+                agregados.append(ingresos[i].day)
+                totalDia = Factura.objects.filter(day=ingresos[i].day, month=ingresos[i].month).aggregate(Sum('total'))
+                datos.append([ingresos[i].day, ingresos[i].month, ingresos[i].year, totalDia['total__sum']])
+
+    # print(datos)
+    context = {"datos": datos, "meses": meses}
+    return render(request, 'reportes/diario.html', context)
 
 def reportes_semanales(request):
     context = {'title': 'Reportes Semanales', 'archivo':'js/semanal.js'}

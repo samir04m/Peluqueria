@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block title %} Reporte Diario {% endblock %}
+
+{% load indice %}
+{% load matriz %}
+{% load reverse %}
+
+{% block content %}
+    <div class="container"><br>
+        <div class="row m-b-0">
+            <a href="{% url 'contabilidad:reportes' %}" class="white-text">
+                <big><i class="fas fa-arrow-left"></i> Volver al Panel de contabilidad</big>
+            </a>
+        </div>
+        <div class="row">
+            <div class="col s12 offset-m1 m10">
+                <div class="card-panel">
+                    <center><h4>Ingresos Diarios de este Mes</h4></center>
+                    <table class="striped bordered highlight responsive-table">
+                        <thead>
+                            <tr>
+                                <th>Dia</th>
+                                <th>Ingresos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in datos %}
+                                <tr>
+                                    <td>{{ i|matriz:0 }} / {{ i|matriz:1 }} / {{ i|matriz:2 }}</td>
+                                    <td>$ {{ i|matriz:3 }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div id="curve_chart" style="width: 700px; height: 500px"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extrahead %}
+    <style>
+        body {
+            background-color: #00796b;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Dias', 'Valor del Ingreso'],
+          {% for dato in datos %}
+              [ '{{ dato|matriz:0 }}', {{ dato|matriz:3 }}],
+          {% endfor %}
+        ]);
+
+        var options = {
+          title: 'Ingresos Diarios de este mes',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          vAxis: {title: 'Ingresos'},
+          hAxis: {title: 'Dias'}
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+{% endblock %}
