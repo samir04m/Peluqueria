@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% load staticfiles %}
 
-{% block title %} Reporte diario {% endblock %}
+{% block title %} Reporte por Servicio {% endblock %}
 
 {% load indice %}
 {% load matriz %}
@@ -18,12 +18,12 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel">
-                    <center><h4>Ingresos Por Servicios</h4></center>
+                    <center><h4>Ingresos Por Tipo de Servicio</h4></center>
                     {% if datos %}
                         <table class="striped bordered highlight responsive-table">
                             <thead>
                                 <tr>
-                                    <th>Servicio</th>
+                                    <th>Tipo de Servicio</th>
                                     <th>Ingresos</th>
                                 </tr>
                             </thead>
@@ -40,7 +40,7 @@
                             <br><br>
                             <hr>
                             <center><h4>Ingresos Por Servicios</h4></center>
-                              <div id="chart_div"></div>
+                              <div id="chart_div" style="height: 300px"></div>
                             <br><hr><br>
                               <center><h4>Número de Ventas por Servicio</h4></center>
                               <div id="piechart_3d"></div>

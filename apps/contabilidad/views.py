@@ -130,8 +130,21 @@ def reportes_por_servicios(request):
     return render(request, 'reportes/porServicio.html', context)
 
 def reportes_por_empleados(request):
-    context = {'title': 'Reportes por Empleados', 'archivo':'js/empleado.js'}
-    return render(request, 'main/reporte.html', context)
+    empleados = Empleado.objects.all()
+
+    datos = []
+    if empleados:
+        for e in empleados:
+            facturas = Factura.objects.filter(empleado__id=e.id)
+            suma = 0
+            for f in facturas:
+                suma += f.total
+            datos.append([e.fname(), suma])
+            print(e.fname(), " tiene ",len(facturas)," facturas")
+
+    print(datos)
+    context = {"datos": datos}
+    return render(request, 'reportes/porEmpleado.html', context)
 
 def getTotalEgresos(egreso):
     suma = 0
