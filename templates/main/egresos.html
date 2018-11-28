@@ -15,42 +15,49 @@
     <div class="container">
         <br>
         <div class="card-panel">
-            <center><h4 style="margin-top:0px;">Lista de Egresos</h4></center>
-            <div class="row">
-                <div class="col s12 offset-m1 m10">
-
-                    <table class="striped bordered highlight responsive-table">
-                        <thead>
-                            <tr>
-                                <th>Gasto</th>
-                                <th>Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Insumos de Materia Prima</td>
-                                <td>$ </td>
-                            </tr>
-                            <tr>
-                                <td>Compra y reparación de Instrumentación</td>
-                                <td>$ 60000.00</td>
-                            </tr>
-                            <tr>
-                                <td>Alquiler del local comercial</td>
-                                <td>$ 300000.00</td>
-                            </tr>
-                            <tr>
-                                <td>Pago de Servicios públicos</td>
-                                <td>
-                                    Energia: $ 80000 <br>
-                                    Agua: $ 20000 <br>
-                                    Telefonía: $ 40000
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <center><h4 style="margin-top:0px;">Egresos de este Mes</h4></center>
+            {% if egresosDelMes %}
+                <div class="row">
+                    <div class="col s12 offset-m1 m10">
+                        <table class="striped bordered highlight responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Gasto</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Insumos de Materia Prima</td>
+                                    <td>$ {{egresosDelMes.insumos}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Compra y reparación de Instrumentación</td>
+                                    <td>$ {{egresosDelMes.instrumentacion}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Alquiler del local comercial</td>
+                                    <td>$ {{egresosDelMes.alquiler}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Pago de Servicios públicos</td>
+                                    <td>
+                                        Energia: $ {{egresosDelMes.energia}} <br>
+                                        Agua: $ {{egresosDelMes.agua}} <br>
+                                        Telefonía: $ {{egresosDelMes.telefonia}} <br>
+                                        Total: $ {{egresosDelMes.totalServiciosPublicos}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                <center>
+                    <h5>Aun no se definen los egresos de este mes</h5>
+                </center>
+            {% endif %}
+
         </div>
     </div>
 

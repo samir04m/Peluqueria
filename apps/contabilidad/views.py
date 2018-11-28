@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from apps.servicio.models import Empleado, Servicio, Tipo, Subtipo, Factura
 from apps.contabilidad.models import Ingreso, Egreso
+import datetime
 
 # Create your views here.
 def reportes(request):
@@ -16,8 +17,12 @@ def ingresos(request):
     return render(request, 'main/egresos.html', context)
 
 def egresos(request):
-    ingreso = Ingreso.objects.first()
-    context = {"ingreso": ingreso}
+    egresos = Egreso.objects.all()
+
+    time = datetime.datetime.now()
+    egresosDelMes = Egreso.objects.filter(month=int(time.month), year=int(time.year)).first()
+    # print("----------->",time.strftime("%B"))
+    context = {"egresos": egresos, "egresosDelMes": egresosDelMes}
     return render(request, 'main/egresos.html', context)
 
 def reportes_diarios(request):
