@@ -17,3 +17,6 @@ class Egreso(models.Model):
     energia =  models.IntegerField()
     agua =  models.IntegerField()
     telefonia =  models.IntegerField()
+
+    def __str__(self):
+        return "Egreso del mes {} del {}".format(self.month, self.year)

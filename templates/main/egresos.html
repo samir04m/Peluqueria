@@ -3,64 +3,113 @@
 
 {% block title %}Egresos{% endblock %}
 
+{% load indice %}
+{% load matriz %}
+
+{% block content %}
+    <div class="container">
+        <br>
+        <div class="card-panel">
+            <div class="row">
+                {% if egresosDelMes %}
+                        <div class="col s12 m8">
+                            <center><h4 style="margin-top:0px;">Egresos de  {{ meses|indice:egresosDelMes.month }} </h4></center>
+                            <table class="striped bordered highlight responsive-table">
+                                <thead>
+                                    <tr>
+                                        <th>Gasto</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Insumos de Materia Prima</td>
+                                        <td>$ {{egresosDelMes.insumos}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Compra y reparación de Instrumentación</td>
+                                        <td>$ {{egresosDelMes.instrumentacion}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Alquiler del local comercial</td>
+                                        <td>$ {{egresosDelMes.alquiler}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pago de Servicios públicos</td>
+                                        <td>
+                                            Energia: $ {{egresosDelMes.energia}} <br>
+                                            Agua: $ {{egresosDelMes.agua}} <br>
+                                            Telefonía: $ {{egresosDelMes.telefonia}} <br>
+                                            Total: $ {{egresosDelMes.totalServiciosPublicos}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <h5 class="right">Egreso Total: $ {{totalEgreso}}</h5>
+                        </div>
+
+                        <div class="col s12 m4">
+                            <div class="m-l-20" style="line-height:2;">
+                                <big><b>Egresos de otros meses</b></big>
+                                <br>
+                                <div class="m-l-20">
+                                    {% if egresos %}
+                                        {% for e in egresos %}
+                                            <a href="">Egresos {{meses|indice:e.month}} del {{e.year}}</a> <br>
+                                        {% endfor %}
+                                    {% else %}
+                                        No hay egresos para mostrar
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                {% else %}
+                    <center>
+                        <h5>Aun no se definen los egresos de este mes</h5>
+                    </center>
+                {% endif %}
+            </div>
+            <div class="row">
+                <div id="curve_chart" style="width: 900px; height: 500px"></div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
 {% block extrahead %}
     <style>
         body {
             background-color: #00796b;
         }
     </style>
-{% endblock %}
 
-{% load indice %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
 
-{% block content %}
-    <div class="container">
-        <br>
-        <div class="card-panel">
-            {% if egresosDelMes %}
-                <div class="row">
-                    <div class="col s12 m8">
-                        <center><h4 style="margin-top:0px;">Egresos de  {{ meses|indice:egresosDelMes.month }} </h4></center>
-                        <table class="striped bordered highlight responsive-table">
-                            <thead>
-                                <tr>
-                                    <th>Gasto</th>
-                                    <th>Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Insumos de Materia Prima</td>
-                                    <td>$ {{egresosDelMes.insumos}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Compra y reparación de Instrumentación</td>
-                                    <td>$ {{egresosDelMes.instrumentacion}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Alquiler del local comercial</td>
-                                    <td>$ {{egresosDelMes.alquiler}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Pago de Servicios públicos</td>
-                                    <td>
-                                        Energia: $ {{egresosDelMes.energia}} <br>
-                                        Agua: $ {{egresosDelMes.agua}} <br>
-                                        Telefonía: $ {{egresosDelMes.telefonia}} <br>
-                                        Total: $ {{egresosDelMes.totalServiciosPublicos}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            {% else %}
-                <center>
-                    <h5>Aun no se definen los egresos de este mes</h5>
-                </center>
-            {% endif %}
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Meses', 'Valor del egreso'],
+          {% for dato in datosGrafica %}
+              [ '{{ dato|matriz:0 }}', {{ dato|matriz:1 }}],
+          {% endfor %}
+        ]);
 
-        </div>
-    </div>
+        var options = {
+          title: 'Egresos de los ultimos meses',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          vAxis: {title: 'Capital'},
+          hAxis: {title: 'Meses'}
+        };
 
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
 {% endblock %}

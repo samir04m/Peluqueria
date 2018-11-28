@@ -21,21 +21,28 @@ def ingresos(request):
 
 
 def egresos(request):
-    egresos = Egreso.objects.all()
+    egresos = Egreso.objects.order_by('month')
 
     time = datetime.datetime.now()
     egresosDelMes = Egreso.objects.filter(month=int(time.month), year=int(time.year)).first()
-    # print("----------->",time.strftime("%B"))
-    context = {"egresos": egresos, "egresosDelMes": egresosDelMes, "meses":meses}
-    print(dir(meses))
+
+    ultimosEgresos = Egreso.objects.filter(year=int(time.year)).order_by('-month')[:4][::-1]
+    nfilas = len(ultimosEgresos)
+    datosGrafica = [None] * nfilas
+    for i in range(nfilas):
+        datosGrafica[i] = [meses[ (ultimosEgresos[i].month)-1 ],  getTotalEgresos(ultimosEgresos[i])]
+
+    print(datosGrafica)
+    print("dato---->", datosGrafica[0][1])
+
+    context = {"egresos": egresos,
+                "egresosDelMes": egresosDelMes,
+                "meses":meses,
+                "totalEgreso": getTotalEgresos(egresosDelMes),
+                "datosGrafica": datosGrafica}
     return render(request, 'main/egresos.html', context)
 
 def reportes_diarios(request):
-    # facturas = Factura.objects.all().select_related('empleado')
-    # print("========>facturas = ", facturas)
-    #
-    # for f in facturas:
-    #     print("factura ", f.id, " empleado ",f.empleado.fname())
 
     context = {'title': 'Reportes Diarios', 'archivo':'js/diario.js'}
     return render(request, 'main/reporte.html', context)
@@ -55,6 +62,15 @@ def reportes_por_servicios(request):
 def reportes_por_empleados(request):
     context = {'title': 'Reportes por Empleados', 'archivo':'js/empleado.js'}
     return render(request, 'main/reporte.html', context)
+
+def getTotalEgresos(egreso):
+    suma = 0
+    if egreso:
+        suma += egreso.insumos
+        suma += egreso.instrumentacion
+        suma += egreso.alquiler
+        suma += egreso.totalServiciosPublicos
+    return suma
 
 """
 Factura.objects.filter(fecha__gte=datetime.date(2018, 9, 10))
