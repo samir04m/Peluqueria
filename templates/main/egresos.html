@@ -9,6 +9,11 @@
 {% block content %}
     <div class="container">
         <br>
+        <div class="row m-b-0">
+            <a href="{% url 'contabilidad:reportes' %}" class="white-text">
+                <big><i class="fas fa-arrow-left"></i> Volver al Panel de contabilidad</big>
+            </a>
+        </div>
         <div class="card-panel">
             <div class="row">
                 {% if egresosDelMes %}
