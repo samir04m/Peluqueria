@@ -12,13 +12,13 @@
 				</a>
 
 	      		<ul class="right hide-on-med-and-down">
-		        	<li><a href="#" id="ainicio"><big>Inicio</big></a></li>
+		        	<li><a href="{% url 'servicio:home' %}" id="ainicio"><big>Inicio</big></a></li>
+		        	<li><a href="{% url 'servicio:mapa' %}" id="amenu" ><big>Mapa</big></a></li>
 
 	      		</ul>
 	      		<ul class="side-nav" id="mobile">
-		        	<li><a href="#">Inicio</a></li>
-
-
+		        	<li><a href="{% url 'servicio:home' %}">Inicio</a></li>
+					<li><a href="{% url 'servicio:mapa' %}">Mapa</a></li>
 	      		</ul>
 	      	</div>
 	    </div>
