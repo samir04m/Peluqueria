@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
+from django.db.models import Sum
 
 from apps.servicio.models import Empleado, Servicio, Tipo, Subtipo, Factura
 from apps.contabilidad.models import Ingreso, Egreso
@@ -45,7 +46,6 @@ def egreso(request, id):
     context = {"egreso": egreso, "meses":meses, "totalEgreso": getTotalEgresos(egreso)}
     return render(request, "main/egreso.html", context)
 
-from django.db.models import Sum
 
 def reportes_diarios(request):
     time = datetime.datetime.now()
@@ -65,8 +65,37 @@ def reportes_diarios(request):
     return render(request, 'reportes/diario.html', context)
 
 def reportes_semanales(request):
-    context = {'title': 'Reportes Semanales', 'archivo':'js/semanal.js'}
-    return render(request, 'main/reporte.html', context)
+    time = datetime.datetime.now()
+    ingresos = Factura.objects.filter(month=time.month).order_by('-id')[:31][::1]
+
+    datos = []
+    if ingresos:
+        agregados = []
+        for i in range(len(ingresos)):
+            stringFecha = getStringFecha(ingresos[i])
+            fecha = time.strptime(stringFecha, "%d/%m/%y")
+            nsemana = fecha.strftime("%W")
+            if not nsemana in agregados:
+                agregados.append(nsemana)
+
+        for a in agregados:
+            print("Semana ->", a)
+            suma = 0
+            anio = ''
+            for i in ingresos:
+                stringFecha = getStringFecha(i)
+                fecha = time.strptime(stringFecha, "%d/%m/%y")
+                nsemana = fecha.strftime("%W")
+                if a == nsemana:
+                    suma += i.total
+                    anio = i.year
+                    print("    dia ", i.day," $ ",i.total)
+            #endfor
+            datos.append([a, anio,  suma])
+        print(datos)
+
+    context = {"datos": datos}
+    return render(request, 'reportes/semanal.html', context)
 
 def reportes_mensuales(request):
     context = {'title': 'Reportes Mensuales', 'archivo':'js/mensual.js'}
@@ -88,6 +117,19 @@ def getTotalEgresos(egreso):
         suma += egreso.alquiler
         suma += egreso.totalServiciosPublicos
     return suma
+
+def getStringFecha(factura):
+    day = str(factura.day)
+    month = str(factura.month)
+    year = str(factura.year)
+    year = year[2] + year[3]
+    if len(day) < 2:
+        day = "0"+day
+    if len(month) < 2:
+        month = "0"+month
+    fecha = day+"/"+month+"/"+year
+    # print("retornar -> ", fecha)
+    return fecha
 
 """
 Factura.objects.filter(fecha__gte=datetime.date(2018, 9, 10))

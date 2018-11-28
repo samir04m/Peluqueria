@@ -59,7 +59,7 @@
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Dias', 'Valor del Ingreso'],
+          ['Dia', 'Valor del Ingreso'],
           {% for dato in datos %}
               [ '{{ dato|matriz:0 }}', {{ dato|matriz:3 }}],
           {% endfor %}
