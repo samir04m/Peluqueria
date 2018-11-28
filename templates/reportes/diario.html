@@ -6,6 +6,7 @@
 {% load indice %}
 {% load matriz %}
 {% load reverse %}
+{% load nombre_mes %}
 
 {% block content %}
     <div class="container"><br>
@@ -18,27 +19,34 @@
             <div class="col s12 offset-m1 m10">
                 <div class="card-panel">
                     <center><h4>Ingresos Diarios de este Mes</h4></center>
-                    <table class="striped bordered highlight responsive-table">
-                        <thead>
-                            <tr>
-                                <th>Dia</th>
-                                <th>Ingresos</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for i in datos %}
+                    {% if datos %}
+                        <table class="striped bordered highlight responsive-table">
+                            <thead>
                                 <tr>
-                                    <td>{{ i|matriz:0 }} / {{ i|matriz:1 }} / {{ i|matriz:2 }}</td>
-                                    <td>$ {{ i|matriz:3 }}</td>
+                                    <th>Dia</th>
+                                    <th>Ingresos</th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div id="curve_chart" style="width: 700px; height: 500px"></div>
-                    </div>
+                            </thead>
+                            <tbody>
+                                {% for i in datos %}
+                                    <tr>
+                                        <td>{{ i|matriz:0 }} de {{ i|nombre_mes:1 }} del {{ i|matriz:2 }}</td>
+                                        <td>$ {{ i|matriz:3 }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div id="curve_chart" style="width: 700px; height: 500px"></div>
+                        </div>
+                    {% else %}
+                        <br>
+                        <center>
+                            <h2>:(</h2>
+                            <h3>No hay datos</h3>
+                        </center>
+                    {% endif %}
                 </div>
-
             </div>
         </div>
     </div>

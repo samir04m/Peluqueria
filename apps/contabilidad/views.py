@@ -98,8 +98,21 @@ def reportes_semanales(request):
     return render(request, 'reportes/semanal.html', context)
 
 def reportes_mensuales(request):
-    context = {'title': 'Reportes Mensuales', 'archivo':'js/mensual.js'}
-    return render(request, 'main/reporte.html', context)
+    time = datetime.datetime.now()
+    meses = Factura.objects.filter(year=time.year).values_list('month', flat=True).distinct()[:12][::-1]
+    print("meses = ",meses)
+    datos = []
+    if meses:
+        for m in meses:
+            ingresosMes = Factura.objects.filter(month=m, year=time.year)
+            suma = 0
+            for i in ingresosMes:
+                suma += i.total
+            datos.append([m, suma])
+        print(datos)
+
+    context = {"datos": datos}
+    return render(request, 'reportes/mensual.html', context)
 
 def reportes_por_servicios(request):
     context = {'title': 'Reportes por Servicios', 'archivo':'js/servicio.js'}

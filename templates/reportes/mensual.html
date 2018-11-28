@@ -5,6 +5,7 @@
 
 {% load indice %}
 {% load matriz %}
+{% load nombre_mes %}
 
 {% block content %}
     <div class="container">
@@ -17,20 +18,20 @@
         <div class="row">
             <div class="col s12 offset-m1 m10">
                 <div class="card-panel">
-                    <center><h4>Ingresos Semanales de este Mes</h4></center>
+                    <center><h4>Ingresos Mesuales de este Año</h4></center>
                     {% if datos %}
                         <table class="striped bordered highlight responsive-table">
                             <thead>
                                 <tr>
-                                    <th>Semana</th>
+                                    <th>Mes</th>
                                     <th>Ingresos</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for i in datos %}
                                     <tr>
-                                        <td>Semana Número {{ i|matriz:0 }} del {{i|matriz:1}}</td>
-                                        <td>$ {{ i|matriz:2 }}</td>
+                                        <td>Mes de {{ i|nombre_mes:0 }}</td>
+                                        <td>$ {{ i|matriz:1 }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -67,18 +68,18 @@
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Semana', 'Valor del Ingreso'],
+          ['Mes', 'Valor del Ingreso'],
           {% for dato in datos %}
-              [ '{{ dato|matriz:0 }}', {{ dato|matriz:2 }}],
+              [ '{{ dato|nombre_mes:0 }}', {{ dato|matriz:1 }}],
           {% endfor %}
         ]);
 
         var options = {
-          title: 'Ingresos de los ultimos meses',
+          title: 'Ingresos Mensuales de este año',
           curveType: 'function',
           legend: { position: 'bottom' },
           vAxis: {title: 'Capital'},
-          hAxis: {title: 'Semanas'}
+          hAxis: {title: 'Meses'}
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
