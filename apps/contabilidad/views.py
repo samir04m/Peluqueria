@@ -26,14 +26,11 @@ def egresos(request):
     time = datetime.datetime.now()
     egresosDelMes = Egreso.objects.filter(month=int(time.month), year=int(time.year)).first()
 
-    ultimosEgresos = Egreso.objects.filter(year=int(time.year)).order_by('-month')[:4][::-1]
+    ultimosEgresos = Egreso.objects.filter(year=int(time.year)).order_by('-month')[:5][::-1]
     nfilas = len(ultimosEgresos)
     datosGrafica = [None] * nfilas
     for i in range(nfilas):
         datosGrafica[i] = [meses[ (ultimosEgresos[i].month)-1 ],  getTotalEgresos(ultimosEgresos[i])]
-
-    print(datosGrafica)
-    print("dato---->", datosGrafica[0][1])
 
     context = {"egresos": egresos,
                 "egresosDelMes": egresosDelMes,
@@ -41,6 +38,11 @@ def egresos(request):
                 "totalEgreso": getTotalEgresos(egresosDelMes),
                 "datosGrafica": datosGrafica}
     return render(request, 'main/egresos.html', context)
+
+def egreso(request, id):
+    egreso = Egreso.objects.filter(id=int(id)).first()
+    context = {"egreso": egreso, "meses":meses, "totalEgreso": getTotalEgresos(egreso)}
+    return render(request, "main/egreso.html", context)
 
 def reportes_diarios(request):
 

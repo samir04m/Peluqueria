@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^$', reportes, name="reportes"),
     url(r'^ingresos', ingresos, name="ingresos"),
     url(r'^egresos', egresos, name="egresos"),
+    url(r'^egreso/(?P<id>[0-9]{1,})', egreso, name='egreso'),
     # url(r'^reportes', reportes, name="reportes"),
     url(r'^reportes-diarios', reportes_diarios, name="reportes_diarios"),
     url(r'^reportes-semanales', reportes_semanales, name="reportes_semanales"),

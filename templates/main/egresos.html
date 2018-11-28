@@ -56,7 +56,7 @@
                                 <div class="m-l-20">
                                     {% if egresos %}
                                         {% for e in egresos %}
-                                            <a href="">Egresos {{meses|indice:e.month}} del {{e.year}}</a> <br>
+                                            <a href="{% url 'contabilidad:egreso' e.id %}">Egresos {{meses|indice:e.month}} del {{e.year}}</a> <br>
                                         {% endfor %}
                                     {% else %}
                                         No hay egresos para mostrar

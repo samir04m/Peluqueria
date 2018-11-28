@@ -1,0 +1,76 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block title %} Vista Egreso {% endblock %}
+
+{% load indice %}
+
+{% block content %}
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col s12 offset-m2 m8">
+                <div class="card-panel">
+                    {% if egreso %}
+                        <center><h4 style="margin-top:0px;">Egresos de  {{ meses|indice:egreso.month }} </h4></center>
+                        <table class="striped bordered highlight responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Gasto</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Insumos de Materia Prima</td>
+                                    <td>$ {{egreso.insumos}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Compra y reparación de Instrumentación</td>
+                                    <td>$ {{egreso.instrumentacion}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Alquiler del local comercial</td>
+                                    <td>$ {{egreso.alquiler}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Pago de Servicios públicos</td>
+                                    <td>
+                                        Energia: $ {{egreso.energia}} <br>
+                                        Agua: $ {{egreso.agua}} <br>
+                                        Telefonía: $ {{egreso.telefonia}} <br>
+                                        Total: $ {{egreso.totalServiciosPublicos}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="right-align">
+                            <h5>Egreso Total: $ {{totalEgreso}}</h5>
+                        </div>
+
+                    {% else %}
+                        <center>
+                            <h3>:(</h3>
+                            <h4>Egreso no encontrado</h4>
+                        </center>
+                    {% endif %}
+                    <center>
+                        <br>
+                        <a href="{% url 'contabilidad:egresos' %}" class="btn btn-rounded">
+                            <i class="fas fa-arrow-left"></i> Ir al Panel de egresos</a>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block extrahead %}
+    <style>
+        body {
+            background-color: #00796b;
+        }
+    </style>
+{% endblock %}
