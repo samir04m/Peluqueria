@@ -5,6 +5,9 @@ from apps.servicio.models import Empleado, Servicio, Tipo, Subtipo, Factura
 from apps.contabilidad.models import Ingreso, Egreso
 import datetime
 
+meses = ['Enero','Febrero','Marzo','Abril',"Mayo","Junio","Julio",
+        "Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+
 # Create your views here.
 def reportes(request):
     ingreso = Ingreso.objects.first()
@@ -16,13 +19,15 @@ def ingresos(request):
     context = {"ingreso": ingreso}
     return render(request, 'main/egresos.html', context)
 
+
 def egresos(request):
     egresos = Egreso.objects.all()
 
     time = datetime.datetime.now()
     egresosDelMes = Egreso.objects.filter(month=int(time.month), year=int(time.year)).first()
     # print("----------->",time.strftime("%B"))
-    context = {"egresos": egresos, "egresosDelMes": egresosDelMes}
+    context = {"egresos": egresos, "egresosDelMes": egresosDelMes, "meses":meses}
+    print(dir(meses))
     return render(request, 'main/egresos.html', context)
 
 def reportes_diarios(request):

@@ -11,14 +11,16 @@
     </style>
 {% endblock %}
 
+{% load indice %}
+
 {% block content %}
     <div class="container">
         <br>
         <div class="card-panel">
-            <center><h4 style="margin-top:0px;">Egresos de este Mes</h4></center>
             {% if egresosDelMes %}
                 <div class="row">
-                    <div class="col s12 offset-m1 m10">
+                    <div class="col s12 m8">
+                        <center><h4 style="margin-top:0px;">Egresos de  {{ meses|indice:egresosDelMes.month }} </h4></center>
                         <table class="striped bordered highlight responsive-table">
                             <thead>
                                 <tr>

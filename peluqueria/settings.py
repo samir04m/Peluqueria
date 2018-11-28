@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'apps.servicio',
     'apps.contabilidad',
+    # 'templatetags.index'
 ]
 
 MIDDLEWARE = [
