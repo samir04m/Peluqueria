@@ -1,0 +1,58 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block title %} Registro de Facturas {% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <div class="card-panel">
+                    <center><h4>Registro de Facturas</h4></center>
+                    {% if facturas %}
+                        <table class="striped bordered highlight responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>N° de Factura</th>
+                                    <th>Fecha</th>
+                                    <th>Empleado</th>
+                                    <th>Pago</th>
+                                    <th>Ver</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for f in facturas %}
+                                    <tr>
+                                        <td>{{ f.id }}</td>
+                                        <td>{{ f.fecha }}</td>
+                                        <td>{{ f.empleado.fname }}</td>
+                                        <td>$ {{ f.total }}</td>
+                                        <td>
+                                            <a href="{% url 'servicio:factura' f.id %}">Ver Factura</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <center>
+                            <br><br>
+                            <h5>No hay facturas para mostrar</h5>
+                        </center>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extrahead %}
+    <style>
+        body {
+            background-color: #00796b;
+        }
+    </style>
+
+{% endblock %}

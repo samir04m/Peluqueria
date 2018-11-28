@@ -58,6 +58,11 @@ def facturar(request):
 
     return HttpResponse("Ningun condicional")
 
+def vistaFacturas(request):
+    facturas = Factura.objects.all()
+    context = {"facturas": facturas }
+    return render(request, "main/vistaFacturas.html", context)
+
 def factura(request, id):
     factura = Factura.objects.filter(id=int(id)).first()
     if factura:
