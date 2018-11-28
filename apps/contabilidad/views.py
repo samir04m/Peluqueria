@@ -12,13 +12,23 @@ meses = ['Enero','Febrero','Marzo','Abril',"Mayo","Junio","Julio",
 # Create your views here.
 def reportes(request):
     ingreso = Ingreso.objects.first()
-    context = {"ingreso": ingreso}
-    return render(request, 'main/reportes.html', context)
 
-def ingresos(request):
-    ingreso = Ingreso.objects.first()
-    context = {"ingreso": ingreso}
-    return render(request, 'main/egresos.html', context)
+    time = datetime.datetime.now()
+    meses = Factura.objects.filter(year=time.year).values_list('month', flat=True).distinct()[:12][::-1]
+    datos = []
+    if meses:
+        for m in meses:
+            ingresosMes = Factura.objects.filter(month=m, year=time.year)
+            ingresos = 0
+            for i in ingresosMes:
+                ingresos += i.total
+            egresoDelMes = Egreso.objects.filter(month=m).first()
+            ganancia = ingresos -getTotalEgresos(egresoDelMes)
+            datos.append([m, ingresos, getTotalEgresos(egresoDelMes), ganancia])
+        print(datos)
+
+    context = {"ingreso": ingreso, "datos": datos}
+    return render(request, 'main/reportes.html', context)
 
 
 def egresos(request):
